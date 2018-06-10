@@ -81,8 +81,8 @@ function login(username, password) {
     body: serializeJSON({
       username,
       password,
-      remote: 'dupbit_app',
-      ua_os: Platform.OS,
+      remote: 'desktop_app',
+      ua_os: 'ios',
       expires: 365 * 24 * 60 * 60,
       ua_overwrite: true,
       ua_name: 'Mobile'
