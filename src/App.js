@@ -4,20 +4,31 @@ import {
   Text,
   View,
   TextInput,
-  Image
+  Image,
+  Button,
+  AsyncStorage
 } from 'react-native';
 
-let loggedIn = false;
-
 export default class App extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      loggedIn: false,
+      username: '',
+      password: ''
+    }
+  }
+
   render() {
-    if (!loggedIn) {
+    if (true) {
       return (
         <View style={styles.container}>
           <Image style={{ flex: 1, resizeMode: 'repeat', width: '100%', height: '100%', backgroundColor: '#ccc', justifyContent: 'center' }} source={require('./resources/images/banner.png')} />
           <Text style={{ position: 'absolute', top: '10%', color: 'white', fontSize: 70 }}>Dupbit Connect</Text>
-          <TextInput placeholder={'Username'} style={styles.username}></TextInput>
-          <TextInput placeholder={'Password'} style={styles.password}></TextInput>
+          <TextInput onChangeText={(username => this.setState({ username }))} placeholder={'Username'} style={styles.username}/>
+          <TextInput secureTextEntry={true} onChangeText={(password) => this.setState({password})} placeholder={'Password'} style={styles.password}/>
+          <Button title={'Login'} onPress={() => login(this.state.username, this.state.password)}/>
         </View>
       )
     }
@@ -53,3 +64,7 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 });
+
+function login(username, password) {
+
+}
