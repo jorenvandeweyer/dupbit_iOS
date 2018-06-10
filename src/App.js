@@ -6,7 +6,9 @@ import {
   TextInput,
   Image,
   Button,
-  AsyncStorage
+  AsyncStorage,
+  Platform,
+  Alert
 } from 'react-native';
 
 export default class App extends React.Component {
@@ -66,5 +68,28 @@ const styles = StyleSheet.create({
 });
 
 function login(username, password) {
-  
+  var serializeJSON = function(data) {
+    return Object.keys(data).map(function (keyName) {
+      return encodeURIComponent(keyName) + '=' + encodeURIComponent(data[keyName])
+    }).join('&');
+  }
+  fetch(`https://dupbit.com/api/login`, {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: serializeJSON({
+      username,
+      password,
+      remote: 'dupbit_app',
+      ua_os: Platform.OS,
+      expires: 365 * 24 * 60 * 60,
+      ua_overwrite: true,
+      ua_name: 'Mobile'
+    })
+  })
+    .then((response) => response.json())
+    .then(responseJSON => {
+      Alert.alert(JSON.stringify(responseJSON))
+    })
 }
